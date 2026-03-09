@@ -14,6 +14,9 @@ const { property } = Astro.props;
 // Evitar romper si no hay imagen
 const mainImage = property.localImages?.[0] || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2070';
 const galleryImages = property.localImages || [];
+
+const baseUrl = import.meta.env.BASE_URL;
+const mainImageSrc = mainImage.startsWith('http') ? mainImage : `${baseUrl}${mainImage}`;
 ---
 
 <Layout 
@@ -23,7 +26,7 @@ const galleryImages = property.localImages || [];
     <!-- Hero Image Property -->
     <div class="relative h-[60vh] md:h-[70vh] w-full pt-20">
         <img 
-            src={`/${mainImage}`} 
+            src={mainImageSrc} 
             alt={property.title} 
             class="w-full h-full object-cover"
         />
@@ -110,7 +113,7 @@ const galleryImages = property.localImages || [];
                     <div class="grid grid-cols-2 gap-4">
                         {galleryImages.map((img, index) => (
                             <div class={`relative overflow-hidden rounded-xl bg-slate-100 aspect-[4/3] ${index === 0 ? 'col-span-2 aspect-[16/9]' : ''}`}>
-                                <img src={`/${img}`} alt={`${property.title} - Imagen ${index + 1}`} class="object-cover w-full h-full hover:scale-105 transition-transform duration-500 cursor-pointer" loading="lazy" />
+                                <img src={img.startsWith('http') ? img : `${baseUrl}${img}`} alt={`${property.title} - Imagen ${index + 1}`} class="object-cover w-full h-full hover:scale-105 transition-transform duration-500 cursor-pointer" loading="lazy" />
                             </div>
                         ))}
                     </div>

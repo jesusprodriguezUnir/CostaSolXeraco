@@ -5,6 +5,7 @@ import propertiesData from '../data/propiedades.json';
 
 // Mostramos 3 props debajo de la cam
 const recommendedProps = propertiesData.slice(0, 3);
+const baseUrl = import.meta.env.BASE_URL;
 ---
 
 <Layout 
@@ -50,8 +51,8 @@ const recommendedProps = propertiesData.slice(0, 3);
                 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
                     {recommendedProps.map(property => (
-                        <a href={`/propiedad/${property.id}`} class="group relative rounded-xl overflow-hidden aspect-[4/3] transform hover:-translate-y-1 transition-all duration-300">
-                            <img src={`/${property.localImages[0]}`} alt={property.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                        <a href={`${baseUrl}propiedad/${property.id}`} class="group relative rounded-xl overflow-hidden aspect-[4/3] transform hover:-translate-y-1 transition-all duration-300">
+                            <img src={property.localImages[0].startsWith('http') ? property.localImages[0] : `${baseUrl}${property.localImages[0]}`} alt={property.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                             <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
                             <div class="absolute bottom-0 left-0 p-4">
                                 <h4 class="text-white font-bold">{property.title}</h4>
