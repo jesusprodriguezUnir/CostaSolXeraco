@@ -9,7 +9,7 @@ const links = [
 ---
 
 <header class="fixed w-full z-50 glass-panel py-4 transition-all duration-300">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div class="flex justify-between items-center">
             <!-- Logo -->
             <a href="/" class="flex flex-col items-start group">
@@ -39,11 +39,61 @@ const links = [
             </nav>
 
             <!-- Mobile menu button -->
-            <button class="md:hidden p-2 text-primary-900">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <button id="mobile-menu-btn" class="md:hidden p-2 text-primary-900 focus:outline-none z-30 relative">
+                <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
         </div>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white/95 backdrop-blur-lg z-10 flex flex-col justify-center items-center opacity-0 pointer-events-none transition-opacity duration-300 md:hidden">
+        <nav class="flex flex-col items-center space-y-8">
+            {links.map(link => (
+                <a 
+                    href={link.href}
+                    class={`text-3xl font-serif font-bold transition-colors hover:text-primary-600 ${
+                        link.label.includes('Webcam') ? 'text-red-500' : 'text-slate-900'
+                    }`}
+                >
+                    {link.label}
+                </a>
+            ))}
+            <a href="/contacto" class="mt-8 bg-primary-600 hover:bg-primary-700 text-white px-8 py-4 rounded-full font-bold transition-all shadow-lg text-xl">
+                Hablamos
+            </a>
+        </nav>
+    </div>
 </header>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        const iconOpen = document.getElementById('menu-icon-open');
+        const iconClose = document.getElementById('menu-icon-close');
+        
+        let isOpen = false;
+
+        btn?.addEventListener('click', () => {
+            isOpen = !isOpen;
+            if (isOpen) {
+                menu?.classList.remove('opacity-0', 'pointer-events-none');
+                menu?.classList.add('opacity-100', 'pointer-events-auto');
+                iconOpen?.classList.add('hidden');
+                iconClose?.classList.remove('hidden');
+                document.body.style.overflow = 'hidden'; // block scrolling
+            } else {
+                menu?.classList.add('opacity-0', 'pointer-events-none');
+                menu?.classList.remove('opacity-100', 'pointer-events-auto');
+                iconOpen?.classList.remove('hidden');
+                iconClose?.classList.add('hidden');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+</script>

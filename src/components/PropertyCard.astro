@@ -8,6 +8,7 @@ interface Props {
     specs: string[];
     amenities: string[];
     localImages: string[];
+    customTitle?: string;
   };
 }
 
@@ -17,7 +18,11 @@ const baseUrl = import.meta.env.BASE_URL;
 const imageSrc = mainImage.startsWith('http') ? mainImage : `${baseUrl}${mainImage}`;
 ---
 
-<article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 flex flex-col h-full transform hover:-translate-y-1">
+<article 
+    class="property-card group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-slate-100 flex flex-col h-full transform hover:-translate-y-1"
+    data-location={property.location}
+    data-type={property.customTitle || "Indiferente"}
+>
     <div class="relative overflow-hidden aspect-[4/3]">
         <img 
             src={imageSrc} 
