@@ -1,0 +1,126 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import propertiesData from '../data/propiedades.json';
+
+// Tomamos las primeras 3 propiedades para destacar
+const featuredProperties = propertiesData.slice(0, 3);
+---
+
+<Layout 
+    title="CostaSol Xeraco | Inmobiliaria en la Playa de Xeraco" 
+    description="Tu agencia inmobiliaria de confianza en Xeraco y Gandía. Especialistas en alquileres y ventas de apartamentos frente al mar."
+>
+	<main>
+		<!-- Hero Section -->
+        <section class="relative min-h-[90vh] flex items-center justify-center pt-20 overflow-hidden">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img 
+                    src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" 
+                    alt="Playa del Mediterráneo" 
+                    class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-r from-slate-900/80 to-primary-900/60"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+                <span class="inline-block py-1 px-3 rounded-full bg-secondary-400/20 border border-secondary-400/50 text-secondary-200 font-medium text-sm mb-6 animate-fade-in-up">
+                    El paraíso local te espera
+                </span>
+                <h1 class="text-5xl md:text-7xl font-serif font-bold mb-6 leading-tight drop-shadow-lg">
+                    Despierta a pasos <br/><span class="text-secondary-400 italic">de la arena.</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-slate-200 mb-10 max-w-2xl mx-auto font-light drop-shadow">
+                    Descubre el auténtico estilo de vida mediterráneo en la Playa de Xeraco. Compra o alquila tu refugio perfecto frente al mar.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="/ventas" class="w-full sm:w-auto px-8 py-4 bg-primary-500 hover:bg-primary-400 text-white rounded-full font-bold text-lg transition-all shadow-[0_0_20px_rgba(20,184,166,0.4)] hover:shadow-[0_0_30px_rgba(20,184,166,0.6)] hover:-translate-y-1">
+                        Ver Propiedades
+                    </a>
+                    <a href="https://www.serviplaya.com/" target="_blank" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full font-bold text-lg transition-all hover:-translate-y-1">
+                        Alquiler Vacacional
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Scroll indicator -->
+            <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+            </div>
+        </section>
+
+        <!-- Webcam Banner -->
+        <section class="bg-gradient-to-br from-primary-800 to-primary-900 border-y border-primary-700 py-12 relative overflow-hidden">
+            <div class="absolute right-0 top-0 w-1/3 h-full opacity-10 pointer-events-none">
+                <svg viewBox="0 0 100 100" class="w-full h-full text-white fill-current"><circle cx="50" cy="50" r="40"/></svg>
+            </div>
+            
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                    <div class="flex-1">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="relative flex h-4 w-4">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-4 w-4 bg-red-500"></span>
+                            </span>
+                            <h2 class="text-3xl font-serif font-bold text-white">Playa en Directo</h2>
+                        </div>
+                        <p class="text-primary-100 text-lg">¿Quieres saber cómo está el mar hoy? Conéctate a nuestra webcam 24/7 y no te pierdas ni un amanecer.</p>
+                    </div>
+                    <div>
+                        <a href="/webcam" class="inline-flex items-center gap-2 bg-white text-primary-900 px-6 py-3 rounded-full font-bold hover:bg-slate-100 transition-colors shadow-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
+                            </svg>
+                            Ver Cámara Ahora
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Properties -->
+        <section class="py-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-serif font-bold text-primary-900 mb-4">Oportunidades Destacadas</h2>
+                    <p class="text-slate-600 max-w-2xl mx-auto text-lg">Nuestra selección exclusiva de propiedades en Xeraco. Encuentra el hogar que siempre soñaste con las características que necesitas.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {featuredProperties.map(property => (
+                        <PropertyCard property={property} />
+                    ))}
+                </div>
+
+                <div class="mt-16 text-center">
+                    <a href="/ventas" class="inline-flex items-center gap-2 text-primary-600 font-bold hover:text-primary-800 transition-colors group text-lg">
+                        Ver todas las propiedades en venta
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to action block -->
+        <section class="py-20 relative overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1544461622-fb4cb21e8d98?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Vista al Mar" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-primary-900/80 backdrop-blur-sm"></div>
+            </div>
+            <div class="relative z-10 max-w-4xl mx-auto px-4 text-center text-white">
+                <h2 class="text-4xl font-serif font-bold mb-6">¿Pensando en vender tu propiedad?</h2>
+                <p class="text-xl text-primary-100 mb-10">Confía en la agencia líder de la zona. Valoración gratuita y gestión integral sin preocupaciones.</p>
+                <a href="#contacto" class="inline-block px-8 py-4 bg-secondary-400 hover:bg-secondary-500 text-slate-900 rounded-full font-bold text-lg transition-transform hover:scale-105 shadow-xl">
+                    Solicitar Valoración
+                </a>
+            </div>
+        </section>
+	</main>
+</Layout>

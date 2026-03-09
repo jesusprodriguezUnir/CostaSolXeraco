@@ -1,0 +1,67 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import propertiesData from '../data/propiedades.json';
+
+// Mostramos 3 props debajo de la cam
+const recommendedProps = propertiesData.slice(0, 3);
+---
+
+<Layout 
+    title="Webcam Playa de Xeraco en Directo | CostaSol Xeraco" 
+    description="Mira en tiempo real la playa de Xeraco. Comprueba el estado del mar y el tiempo ahora mismo."
+>
+    <!-- Hero / Webcam Section -->
+    <main class="pt-24 pb-16 bg-slate-900 min-h-screen flex flex-col">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-grow flex flex-col">
+            
+            <div class="text-center justify-center mb-8 pt-4">
+                <div class="inline-flex items-center gap-3 bg-red-500/20 text-red-500 px-4 py-2 rounded-full border border-red-500/30 mb-4 animate-pulse">
+                    <span class="relative flex h-3 w-3">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                    </span>
+                    <span class="font-bold tracking-widest uppercase text-sm">Transmisión en Vivo</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-white mb-4">Playa de Xeraco</h1>
+                <p class="text-slate-300 text-lg">Disfruta de las vistas de nuestro mar, las 24 horas del día, los 365 días del año.</p>
+            </div>
+
+            <!-- Webcam Player Container -->
+            <div class="w-full max-w-5xl mx-auto bg-black rounded-2xl md:rounded-[2rem] overflow-hidden shadow-2xl relative border border-slate-700 aspect-video flex-grow-0">
+                <div class="absolute inset-0 flex items-center justify-center bg-slate-800">
+                    <iframe 
+                        src="https://g0.ipcamlive.com/player/player.php?alias=645b5e0857e41" 
+                        class="w-full h-full object-cover"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Upsell Section below webcam -->
+            <div class="w-full max-w-5xl mx-auto mt-12 bg-white/5 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-2">¿Te gusta lo que ves?</h3>
+                        <p class="text-slate-300">Despierta con esta vista todos los días. Alójate a un paso de esta playa.</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                    {recommendedProps.map(property => (
+                        <a href={`/propiedad/${property.id}`} class="group relative rounded-xl overflow-hidden aspect-[4/3] transform hover:-translate-y-1 transition-all duration-300">
+                            <img src={`/${property.localImages[0]}`} alt={property.title} class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                            <div class="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/20 to-transparent"></div>
+                            <div class="absolute bottom-0 left-0 p-4">
+                                <h4 class="text-white font-bold">{property.title}</h4>
+                                <span class="text-primary-400 font-semibold text-sm">{property.price}</span>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
+
+        </div>
+    </main>
+</Layout>

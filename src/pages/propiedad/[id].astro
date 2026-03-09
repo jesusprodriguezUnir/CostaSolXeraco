@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import propertiesData from '../../data/propiedades.json';
+
+export function getStaticPaths() {
+  return propertiesData.map(property => ({
+    params: { id: property.id },
+    props: { property },
+  }));
+}
+
+const { property } = Astro.props;
+
+// Evitar romper si no hay imagen
+const mainImage = property.localImages?.[0] || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80&w=2070';
+const galleryImages = property.localImages || [];
+---
+
+<Layout 
+    title={`${property.title} en ${property.location} | CostaSol Xeraco`} 
+    description={property.comentarios}
+>
+    <!-- Hero Image Property -->
+    <div class="relative h-[60vh] md:h-[70vh] w-full pt-20">
+        <img 
+            src={`/${mainImage}`} 
+            alt={property.title} 
+            class="w-full h-full object-cover"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+        
+        <div class="absolute bottom-0 left-0 right-0 p-8 md:p-16">
+            <div class="max-w-7xl mx-auto">
+                <span class="bg-primary-600 text-white px-3 py-1 rounded-full text-sm font-semibold mb-4 inline-block shadow-lg">
+                    En Venta
+                </span>
+                <h1 class="text-4xl md:text-6xl font-serif font-bold text-white mb-2 leading-tight drop-shadow-md">
+                    {property.title}
+                </h1>
+                <p class="text-xl text-slate-200 flex items-center gap-2 drop-shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    {property.location}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            <!-- Left Col: Details & Gallery -->
+            <div class="lg:col-span-2 space-y-12">
+                <!-- Price and Basic Info Mobile -->
+                <div class="lg:hidden bg-white p-6 rounded-2xl shadow-sm border border-slate-100 flex justify-between items-center">
+                    <div class="text-3xl font-bold text-primary-600">{property.price}</div>
+                    <div class="text-slate-500 font-medium">Ref: {property.reference}</div>
+                </div>
+
+                <section>
+                    <h2 class="text-2xl font-serif font-bold text-slate-900 mb-6">Descripción</h2>
+                    <div class="prose prose-lg text-slate-600 max-w-none">
+                        <p class="whitespace-pre-line">{property.comentarios}</p>
+                    </div>
+                    {property.publicLink && (
+                        <div class="mt-8">
+                            <a href={property.publicLink} target="_blank" class="inline-flex items-center gap-2 text-primary-600 font-bold hover:text-primary-800 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                                Documentación o Plano adicional
+                            </a>
+                        </div>
+                    )}
+                </section>
+
+                <hr class="border-slate-200" />
+
+                <section>
+                    <h2 class="text-2xl font-serif font-bold text-slate-900 mb-6">Características Principales</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                        {property.specs.map(spec => (
+                            <div class="bg-slate-50 p-4 rounded-xl border border-slate-100 text-center text-slate-700 font-medium">
+                                {spec}
+                            </div>
+                        ))}
+                    </div>
+                </section>
+                
+                {property.amenities.length > 0 && (
+                    <section>
+                        <h2 class="text-2xl font-serif font-bold text-slate-900 mb-6">Comodidades</h2>
+                        <ul class="grid grid-cols-2 gap-4">
+                            {property.amenities.map(amenity => (
+                                <li class="flex items-center gap-3 text-slate-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                                    {amenity}
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                )}
+
+                <hr class="border-slate-200" />
+
+                <!-- Photo Gallery -->
+                <section>
+                    <h2 class="text-2xl font-serif font-bold text-slate-900 mb-6">Galería de Imágenes</h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        {galleryImages.map((img, index) => (
+                            <div class={`relative overflow-hidden rounded-xl bg-slate-100 aspect-[4/3] ${index === 0 ? 'col-span-2 aspect-[16/9]' : ''}`}>
+                                <img src={`/${img}`} alt={`${property.title} - Imagen ${index + 1}`} class="object-cover w-full h-full hover:scale-105 transition-transform duration-500 cursor-pointer" loading="lazy" />
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Right Col: Sticky Sidebar Contact -->
+            <div class="hidden lg:block relative">
+                <div class="sticky top-28 bg-white p-8 rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-100">
+                    <div class="text-center mb-8">
+                        <div class="text-4xl font-bold text-slate-900 mb-2">{property.price}</div>
+                        <div class="text-sm font-semibold text-slate-400">Referencia: {property.reference}</div>
+                    </div>
+
+                    <h3 class="text-xl font-bold mb-4">¿Te interesa?</h3>
+                    <p class="text-slate-600 mb-6 text-sm">Contacta con nosotros ahora para visitar esta increíble propiedad.</p>
+                    
+                    <form class="space-y-4">
+                        <div>
+                            <input type="text" placeholder="Tu Nombre" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Tu Email" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow">
+                        </div>
+                        <div>
+                            <textarea rows="4" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-shadow text-slate-700">Hola, estoy interesado en recibir más información sobre el inmueble con referencia {property.reference}.</textarea>
+                        </div>
+                        <button type="button" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 rounded-xl transition-colors shadow-lg shadow-primary-600/30">
+                            Enviar Solicitud
+                        </button>
+                    </form>
+                    
+                    <div class="mt-8 flex flex-col items-center justify-center pt-8 border-t border-slate-100">
+                        <span class="text-slate-500 mb-2 text-sm">O llámanos directamente</span>
+                        <a href="tel:+34962892000" class="text-xl font-bold text-secondary-600 hover:text-secondary-700 truncate">+34 96 289 20 00</a>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+</Layout>

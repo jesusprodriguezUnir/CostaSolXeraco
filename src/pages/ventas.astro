@@ -1,0 +1,60 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import propertiesData from '../data/propiedades.json';
+---
+
+<Layout 
+    title="Propiedades en Venta | CostaSol Xeraco" 
+    description="Encuentra apartamentos, chalets y estudios en venta en la Playa de Xeraco y Gandía."
+>
+    <!-- Header Spacing -->
+    <div class="pt-24 pb-12 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-primary-900 mb-4">
+                Propiedades en Venta
+            </h1>
+            <p class="text-lg text-slate-600 max-w-3xl">
+                Explora el inventario completo de inmuebles disponibles. Tu nuevo rincón en el Mediterráneo te está esperando.
+            </p>
+        </div>
+    </div>
+
+    <!-- Filtros (simulados visualmente por ahora) -->
+    <div class="bg-white border-b border-slate-200 sticky top-[72px] z-40 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex flex-wrap gap-4 items-center">
+                <span class="text-sm font-semibold text-slate-400 uppercase tracking-widest mr-2">Filtros:</span>
+                <select class="bg-slate-50 border border-slate-200 text-slate-700 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <option>Cualquier Localidad</option>
+                    <option>Playa de Xeraco</option>
+                    <option>Pueblo de Xeraco</option>
+                    <option>Playa de Gandía</option>
+                </select>
+                <select class="bg-slate-50 border border-slate-200 text-slate-700 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <option>Cualquier Tipo</option>
+                    <option>Apartamento</option>
+                    <option>Casa de Pueblo</option>
+                    <option>Plaza de Garaje</option>
+                </select>
+                <button class="bg-primary-50 text-primary-700 px-4 py-2 rounded-lg font-medium hover:bg-primary-100 transition-colors">
+                    Limpiar
+                </button>
+                <div class="ml-auto text-sm text-slate-500 font-medium">
+                    {propertiesData.length} resultados encontrados
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Grid Properties -->
+    <section class="py-12 bg-slate-50 min-h-[50vh]">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {propertiesData.map(property => (
+                    <PropertyCard property={property} />
+                ))}
+            </div>
+        </div>
+    </section>
+</Layout>
