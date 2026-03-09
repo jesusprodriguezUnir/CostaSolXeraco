@@ -2,7 +2,7 @@
 const links = [
     { label: 'Inicio', href: '/' },
     { label: 'Ventas', href: '/ventas' },
-    { label: 'Alquileres', href: 'https://www.serviplaya.com/' },
+    { label: 'Alquileres', href: '/alquileres' },
     { label: 'Webcam 🔴', href: '/webcam' },
     { label: 'Experiencia Xeraco', href: '/experiencia' },
 ];
@@ -22,7 +22,7 @@ const links = [
                 {links.map(link => (
                     <a 
                         href={link.href}
-                        target={link.label === 'Alquileres' ? '_blank' : '_self'}
+                        target="_self"
                         class={`text-sm font-medium transition-colors hover:text-primary-600 ${
                             link.label.includes('Webcam') 
                                 ? 'text-red-600 font-bold animate-pulse hover:text-red-700' 
@@ -33,7 +33,7 @@ const links = [
                     </a>
                 ))}
                 
-                <a href="#contacto" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                <a href="/contacto" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2.5 rounded-full font-medium transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
                     Hablamos
                 </a>
             </nav>
